@@ -21,8 +21,8 @@ module aptos_token_objects::collection {
     use std::option::{Self, Option};
     use std::signer;
     use std::string::{Self, String};
-    use aptos_framework::event;
-    use aptos_framework::object::{Self, ConstructorRef, Object};
+    use supra_framework::event;
+    use supra_framework::object::{Self, ConstructorRef, Object};
 
     use aptos_token_objects::royalty::{Self, Royalty};
 
@@ -45,7 +45,7 @@ module aptos_token_objects::collection {
     const MAX_URI_LENGTH: u64 = 512;
     const MAX_DESCRIPTION_LENGTH: u64 = 2048;
 
-    #[resource_group_member(group = aptos_framework::object::ObjectGroup)]
+    #[resource_group_member(group = supra_framework::object::ObjectGroup)]
     /// Represents the common fields for a collection.
     struct Collection has key {
         /// The creator of this collection.
@@ -72,7 +72,7 @@ module aptos_token_objects::collection {
         mutated_field_name: String,
     }
 
-    #[resource_group_member(group = aptos_framework::object::ObjectGroup)]
+    #[resource_group_member(group = supra_framework::object::ObjectGroup)]
     /// Fixed supply tracker, this is useful for ensuring that a limited number of tokens are minted.
     /// and adding events and supply tracking to a collection.
     struct FixedSupply has key {
@@ -86,7 +86,7 @@ module aptos_token_objects::collection {
         mint_events: event::EventHandle<MintEvent>,
     }
 
-    #[resource_group_member(group = aptos_framework::object::ObjectGroup)]
+    #[resource_group_member(group = supra_framework::object::ObjectGroup)]
     /// Unlimited supply tracker, this is useful for adding events and supply tracking to a collection.
     struct UnlimitedSupply has key {
         current_supply: u64,
@@ -438,7 +438,7 @@ module aptos_token_objects::collection {
     }
 
     #[test(creator = @0x123, trader = @0x456)]
-    #[expected_failure(abort_code = 0x50003, location = aptos_framework::object)]
+    #[expected_failure(abort_code = 0x50003, location = supra_framework::object)]
     entry fun test_create_and_transfer(creator: &signer, trader: &signer) {
         let creator_address = signer::address_of(creator);
         let collection_name = string::utf8(b"collection name");
@@ -452,7 +452,7 @@ module aptos_token_objects::collection {
     }
 
     #[test(creator = @0x123)]
-    #[expected_failure(abort_code = 0x80001, location = aptos_framework::object)]
+    #[expected_failure(abort_code = 0x80001, location = supra_framework::object)]
     entry fun test_duplicate_collection(creator: &signer) {
         let collection_name = string::utf8(b"collection name");
         create_collection_helper(creator, collection_name);
