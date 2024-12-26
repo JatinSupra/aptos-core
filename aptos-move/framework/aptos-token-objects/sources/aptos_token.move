@@ -12,7 +12,7 @@ module aptos_token_objects::aptos_token {
     use std::option::{Self, Option};
     use std::string::String;
     use std::signer;
-    use aptos_framework::object::{Self, ConstructorRef, Object};
+    use supra_framework::object::{Self, ConstructorRef, Object};
     use aptos_token_objects::collection;
     use aptos_token_objects::property_map;
     use aptos_token_objects::royalty;
@@ -31,7 +31,7 @@ module aptos_token_objects::aptos_token {
     /// The property map being mutated is not mutable
     const EPROPERTIES_NOT_MUTABLE: u64 = 6;
 
-    #[resource_group_member(group = aptos_framework::object::ObjectGroup)]
+    #[resource_group_member(group = supra_framework::object::ObjectGroup)]
     /// Storage state for managing the no-code Collection.
     struct AptosCollection has key {
         /// Used to mutate collection fields
@@ -575,7 +575,7 @@ module aptos_token_objects::aptos_token {
 
     public fun is_mutable_collection_royalty<T: key>(
         collection: Object<T>,
-    ): bool acquires AptosCollection {
+    ): bool acquires Collection {
         option::is_some(&borrow_collection(&collection).royalty_mutator_ref)
     }
 
@@ -691,7 +691,7 @@ module aptos_token_objects::aptos_token {
     #[test_only]
     use std::string;
     #[test_only]
-    use aptos_framework::account;
+    use supra_framework::account;
 
     #[test(creator = @0x123)]
     fun test_create_and_transfer(creator: &signer) acquires AptosCollection, AptosToken {
