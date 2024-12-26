@@ -10,8 +10,8 @@ module aptos_token_objects::token {
     use std::string::{Self, String};
     use std::signer;
     use std::vector;
-    use aptos_framework::event;
-    use aptos_framework::object::{Self, ConstructorRef, Object};
+    use supra_framework::event;
+    use supra_framework::object::{Self, ConstructorRef, Object};
     use aptos_token_objects::collection::{Self, Collection};
     use aptos_token_objects::royalty::{Self, Royalty};
 
